@@ -12,7 +12,6 @@ class JobStatus(str, Enum):
     open = "open"
     closed = "closed"
 
-# Job model
 class Job(BaseModel):
     id: UUID = Field(default_factory=uuid4)
     title: str
@@ -23,10 +22,9 @@ class Job(BaseModel):
     status: JobStatus = JobStatus.open
     posted_at: datetime = Field(default_factory=datetime.utcnow)
 
-# In-memory database
 fake_jobs_db: List[Job] = []
 
-# POST - Create a new job
+
 @app.post("/jobs", response_model=Job)
 def create_job(job: Job):
     fake_jobs_db.append(job)
